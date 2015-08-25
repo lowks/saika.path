@@ -1,6 +1,3 @@
-### saika.path
-------
-
 ### Installition
 
     pip install saika.path

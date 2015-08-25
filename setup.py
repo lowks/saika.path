@@ -1,8 +1,20 @@
+import json
+import os
+import shutil
+
 from setuptools import find_packages, setup
 
-setup(
+
+with open(os.path.join(os.path.dirname(__file__), 'saika', 'config', 'path.json'), 'r') as f:
+    config = json.loads(f.read())
+
+major = config.get('major')
+ordinary = config.get('ordinary')
+minor = config.get('minor')
+
+r = setup(
     name='saika.path',
-    version='0.0.9',
+    version='%s.%s.%s' % (major, ordinary, minor),
     license='PSF',
     author='Mohanson',
     author_email='mohanson@outlook.com',
@@ -20,3 +32,14 @@ setup(
         '': ['*.*']},
     install_requires=['saika.paramscheck'],
 )
+
+if 'upload' in sorted(r.command_options.keys()):
+    config['minor'] += 1
+    with open(os.path.join(os.path.dirname(__file__), 'saika', 'config', 'path.json'), 'w') as f:
+        f.write(json.dumps(config))
+
+for dir in os.listdir('./'):
+    fullpath = os.path.join(os.path.dirname(__file__), dir)
+    if os.path.isdir(fullpath):
+        if dir in ['dist', 'build'] or dir.endswith('.egg-info'):
+            shutil.rmtree(fullpath)
