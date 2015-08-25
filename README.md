@@ -4,7 +4,7 @@
 
 ### Usage
 
-Example, how delete .pyc files in a project(use Unix globbing)
+Example, how to delete .pyc files in a project (use Unix globbing)
 
     import saika.path
     
